@@ -4,16 +4,18 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-Stream<String> imageStream() async* {
+class StreamLogic {
+  final StreamController<String> streamCtrl =
+      StreamController<String>.broadcast();
+  Stream<String> get mainStream => streamCtrl.stream;
   var client = HttpClient();
   var uri = Uri.parse('https://api.thecatapi.com/v1/images/search');
 
-  while (true) {
-    await Future.delayed(const Duration(seconds: 2));
+  imageStream() async {
     HttpClientRequest request = await client.getUrl(uri);
     HttpClientResponse response = await request.close();
     var data = await response.transform(utf8.decoder).join();
     var map = json.decode(data);
-    yield map[0]['url'].toString();
+    streamCtrl.sink.add(map[0]['url'].toString());
   }
 }

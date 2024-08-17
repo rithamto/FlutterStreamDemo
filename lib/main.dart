@@ -29,13 +29,20 @@ class MyStreamApp extends StatefulWidget {
 }
 
 class _MyStreamAppState extends State<MyStreamApp> {
+  final stream = StreamLogic();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.send),
+        onPressed: () {
+          stream.imageStream();
+        },
+      ),
+      body: Scaffold(
         body: Center(
           child: StreamBuilder<String>(
-            stream: imageStream(),
+            stream: stream.mainStream,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Image.network(snapshot.data!);
