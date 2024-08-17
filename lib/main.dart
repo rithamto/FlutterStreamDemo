@@ -16,20 +16,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyStreamApp(),
+      home: MyStreamApp(),
     );
   }
 }
 
-class MyStreamApp extends StatefulWidget {
-  const MyStreamApp({super.key});
-
-  @override
-  _MyStreamAppState createState() => _MyStreamAppState();
-}
-
-class _MyStreamAppState extends State<MyStreamApp> {
+class MyStreamApp extends StatelessWidget {
   final stream = StreamLogic();
+
+  MyStreamApp({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
